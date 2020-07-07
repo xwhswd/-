@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sciencemanager.mapper.PatentMsgMapper">
+  <resultMap id="BaseResultMap" type="com.example.sciencemanager.bean.PatentMsg">
+    <id column="SerialNum" jdbcType="INTEGER" property="serialnum" />
+    <id column="ApplicateID" jdbcType="INTEGER" property="applicateid" />
+    <result column="PatentName" jdbcType="VARCHAR" property="patentname" />
+    <result column="College" jdbcType="VARCHAR" property="college" />
+    <result column="PatentKind" jdbcType="INTEGER" property="patentkind" />
+    <result column="ApplicateDate" jdbcType="TIMESTAMP" property="applicatedate" />
+    <result column="IsDutyPatent" jdbcType="INTEGER" property="isdutypatent" />
+    <result column="Inventor" jdbcType="VARCHAR" property="inventor" />
+    <result column="Remake" jdbcType="VARCHAR" property="remake" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    SerialNum, ApplicateID, PatentName, College, PatentKind, ApplicateDate, IsDutyPatent, 
+    Inventor, Remake
+  </sql>
+  <select id="selectByExample" parameterType="com.example.sciencemanager.bean.PatentMsgExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PatentMsg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="com.example.sciencemanager.bean.PatentMsgKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PatentMsg
+    where SerialNum = #{serialnum,jdbcType=INTEGER}
+      and ApplicateID = #{applicateid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.sciencemanager.bean.PatentMsgKey">
+    delete from PatentMsg
+    where SerialNum = #{serialnum,jdbcType=INTEGER}
+      and ApplicateID = #{applicateid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.sciencemanager.bean.PatentMsgExample">
+    delete from PatentMsg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.sciencemanager.bean.PatentMsg">
+    insert into PatentMsg (SerialNum, ApplicateID, PatentName, 
+      College, PatentKind, ApplicateDate, 
+      IsDutyPatent, Inventor, Remake
+      )
+    values (#{serialnum,jdbcType=INTEGER}, #{applicateid,jdbcType=INTEGER}, #{patentname,jdbcType=VARCHAR}, 
+      #{college,jdbcType=VARCHAR}, #{patentkind,jdbcType=INTEGER}, #{applicatedate,jdbcType=TIMESTAMP}, 
+      #{isdutypatent,jdbcType=INTEGER}, #{inventor,jdbcType=VARCHAR}, #{remake,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.sciencemanager.bean.PatentMsg">
+    insert into PatentMsg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serialnum != null">
+        SerialNum,
+      </if>
+      <if test="applicateid != null">
+        ApplicateID,
+      </if>
+      <if test="patentname != null">
+        PatentName,
+      </if>
+      <if test="college != null">
+        College,
+      </if>
+      <if test="patentkind != null">
+        PatentKind,
+      </if>
+      <if test="applicatedate != null">
+        ApplicateDate,
+      </if>
+      <if test="isdutypatent != null">
+        IsDutyPatent,
+      </if>
+      <if test="inventor != null">
+        Inventor,
+      </if>
+      <if test="remake != null">
+        Remake,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serialnum != null">
+        #{serialnum,jdbcType=INTEGER},
+      </if>
+      <if test="applicateid != null">
+        #{applicateid,jdbcType=INTEGER},
+      </if>
+      <if test="patentname != null">
+        #{patentname,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="patentkind != null">
+        #{patentkind,jdbcType=INTEGER},
+      </if>
+      <if test="applicatedate != null">
+        #{applicatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdutypatent != null">
+        #{isdutypatent,jdbcType=INTEGER},
+      </if>
+      <if test="inventor != null">
+        #{inventor,jdbcType=VARCHAR},
+      </if>
+      <if test="remake != null">
+        #{remake,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.sciencemanager.bean.PatentMsgExample" resultType="java.lang.Long">
+    select count(*) from PatentMsg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update PatentMsg
+    <set>
+      <if test="record.serialnum != null">
+        SerialNum = #{record.serialnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.applicateid != null">
+        ApplicateID = #{record.applicateid,jdbcType=INTEGER},
+      </if>
+      <if test="record.patentname != null">
+        PatentName = #{record.patentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.college != null">
+        College = #{record.college,jdbcType=VARCHAR},
+      </if>
+      <if test="record.patentkind != null">
+        PatentKind = #{record.patentkind,jdbcType=INTEGER},
+      </if>
+      <if test="record.applicatedate != null">
+        ApplicateDate = #{record.applicatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isdutypatent != null">
+        IsDutyPatent = #{record.isdutypatent,jdbcType=INTEGER},
+      </if>
+      <if test="record.inventor != null">
+        Inventor = #{record.inventor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remake != null">
+        Remake = #{record.remake,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update PatentMsg
+    set SerialNum = #{record.serialnum,jdbcType=INTEGER},
+      ApplicateID = #{record.applicateid,jdbcType=INTEGER},
+      PatentName = #{record.patentname,jdbcType=VARCHAR},
+      College = #{record.college,jdbcType=VARCHAR},
+      PatentKind = #{record.patentkind,jdbcType=INTEGER},
+      ApplicateDate = #{record.applicatedate,jdbcType=TIMESTAMP},
+      IsDutyPatent = #{record.isdutypatent,jdbcType=INTEGER},
+      Inventor = #{record.inventor,jdbcType=VARCHAR},
+      Remake = #{record.remake,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sciencemanager.bean.PatentMsg">
+    update PatentMsg
+    <set>
+      <if test="patentname != null">
+        PatentName = #{patentname,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        College = #{college,jdbcType=VARCHAR},
+      </if>
+      <if test="patentkind != null">
+        PatentKind = #{patentkind,jdbcType=INTEGER},
+      </if>
+      <if test="applicatedate != null">
+        ApplicateDate = #{applicatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdutypatent != null">
+        IsDutyPatent = #{isdutypatent,jdbcType=INTEGER},
+      </if>
+      <if test="inventor != null">
+        Inventor = #{inventor,jdbcType=VARCHAR},
+      </if>
+      <if test="remake != null">
+        Remake = #{remake,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SerialNum = #{serialnum,jdbcType=INTEGER}
+      and ApplicateID = #{applicateid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sciencemanager.bean.PatentMsg">
+    update PatentMsg
+    set PatentName = #{patentname,jdbcType=VARCHAR},
+      College = #{college,jdbcType=VARCHAR},
+      PatentKind = #{patentkind,jdbcType=INTEGER},
+      ApplicateDate = #{applicatedate,jdbcType=TIMESTAMP},
+      IsDutyPatent = #{isdutypatent,jdbcType=INTEGER},
+      Inventor = #{inventor,jdbcType=VARCHAR},
+      Remake = #{remake,jdbcType=VARCHAR}
+    where SerialNum = #{serialnum,jdbcType=INTEGER}
+      and ApplicateID = #{applicateid,jdbcType=INTEGER}
+  </update>
+</mapper>

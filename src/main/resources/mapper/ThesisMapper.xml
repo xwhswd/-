@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sciencemanager.mapper.ThesisMapper">
+  <resultMap id="BaseResultMap" type="com.example.sciencemanager.bean.Thesis">
+    <id column="ThesisID" jdbcType="INTEGER" property="thesisid" />
+    <result column="ThesisName" jdbcType="VARCHAR" property="thesisname" />
+    <result column="FirstWriter" jdbcType="VARCHAR" property="firstwriter" />
+    <result column="SecondWriter" jdbcType="VARCHAR" property="secondwriter" />
+    <result column="Position" jdbcType="VARCHAR" property="position" />
+    <result column="isInBook" jdbcType="INTEGER" property="isinbook" />
+    <result column="Remark" jdbcType="VARCHAR" property="remark" />
+    <result column="PublicationName" jdbcType="VARCHAR" property="publicationname" />
+    <result column="ReelNum" jdbcType="INTEGER" property="reelnum" />
+    <result column="PageRange" jdbcType="VARCHAR" property="pagerange" />
+    <result column="Date" jdbcType="TIMESTAMP" property="date" />
+    <result column="Issue" jdbcType="INTEGER" property="issue" />
+    <result column="IsExpenditure" jdbcType="INTEGER" property="isexpenditure" />
+    <result column="Expenditure" jdbcType="INTEGER" property="expenditure" />
+    <result column="RetrievalKind" jdbcType="VARCHAR" property="retrievalkind" />
+    <result column="RetrievalID" jdbcType="INTEGER" property="retrievalid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ThesisID, ThesisName, FirstWriter, SecondWriter, Position, isInBook, Remark, PublicationName, 
+    ReelNum, PageRange, Date, Issue, IsExpenditure, Expenditure, RetrievalKind, RetrievalID
+  </sql>
+  <select id="selectByExample" parameterType="com.example.sciencemanager.bean.ThesisExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Thesis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Thesis
+    where ThesisID = #{thesisid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Thesis
+    where ThesisID = #{thesisid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.sciencemanager.bean.ThesisExample">
+    delete from Thesis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.sciencemanager.bean.Thesis">
+    insert into Thesis (ThesisID, ThesisName, FirstWriter, 
+      SecondWriter, Position, isInBook, 
+      Remark, PublicationName, ReelNum, 
+      PageRange, Date, Issue, 
+      IsExpenditure, Expenditure, RetrievalKind, 
+      RetrievalID)
+    values (#{thesisid,jdbcType=INTEGER}, #{thesisname,jdbcType=VARCHAR}, #{firstwriter,jdbcType=VARCHAR}, 
+      #{secondwriter,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{isinbook,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{publicationname,jdbcType=VARCHAR}, #{reelnum,jdbcType=INTEGER}, 
+      #{pagerange,jdbcType=VARCHAR}, #{date,jdbcType=TIMESTAMP}, #{issue,jdbcType=INTEGER}, 
+      #{isexpenditure,jdbcType=INTEGER}, #{expenditure,jdbcType=INTEGER}, #{retrievalkind,jdbcType=VARCHAR}, 
+      #{retrievalid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.sciencemanager.bean.Thesis">
+    insert into Thesis
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="thesisid != null">
+        ThesisID,
+      </if>
+      <if test="thesisname != null">
+        ThesisName,
+      </if>
+      <if test="firstwriter != null">
+        FirstWriter,
+      </if>
+      <if test="secondwriter != null">
+        SecondWriter,
+      </if>
+      <if test="position != null">
+        Position,
+      </if>
+      <if test="isinbook != null">
+        isInBook,
+      </if>
+      <if test="remark != null">
+        Remark,
+      </if>
+      <if test="publicationname != null">
+        PublicationName,
+      </if>
+      <if test="reelnum != null">
+        ReelNum,
+      </if>
+      <if test="pagerange != null">
+        PageRange,
+      </if>
+      <if test="date != null">
+        Date,
+      </if>
+      <if test="issue != null">
+        Issue,
+      </if>
+      <if test="isexpenditure != null">
+        IsExpenditure,
+      </if>
+      <if test="expenditure != null">
+        Expenditure,
+      </if>
+      <if test="retrievalkind != null">
+        RetrievalKind,
+      </if>
+      <if test="retrievalid != null">
+        RetrievalID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="thesisid != null">
+        #{thesisid,jdbcType=INTEGER},
+      </if>
+      <if test="thesisname != null">
+        #{thesisname,jdbcType=VARCHAR},
+      </if>
+      <if test="firstwriter != null">
+        #{firstwriter,jdbcType=VARCHAR},
+      </if>
+      <if test="secondwriter != null">
+        #{secondwriter,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="isinbook != null">
+        #{isinbook,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="publicationname != null">
+        #{publicationname,jdbcType=VARCHAR},
+      </if>
+      <if test="reelnum != null">
+        #{reelnum,jdbcType=INTEGER},
+      </if>
+      <if test="pagerange != null">
+        #{pagerange,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issue != null">
+        #{issue,jdbcType=INTEGER},
+      </if>
+      <if test="isexpenditure != null">
+        #{isexpenditure,jdbcType=INTEGER},
+      </if>
+      <if test="expenditure != null">
+        #{expenditure,jdbcType=INTEGER},
+      </if>
+      <if test="retrievalkind != null">
+        #{retrievalkind,jdbcType=VARCHAR},
+      </if>
+      <if test="retrievalid != null">
+        #{retrievalid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.sciencemanager.bean.ThesisExample" resultType="java.lang.Long">
+    select count(*) from Thesis
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Thesis
+    <set>
+      <if test="record.thesisid != null">
+        ThesisID = #{record.thesisid,jdbcType=INTEGER},
+      </if>
+      <if test="record.thesisname != null">
+        ThesisName = #{record.thesisname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstwriter != null">
+        FirstWriter = #{record.firstwriter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secondwriter != null">
+        SecondWriter = #{record.secondwriter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        Position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isinbook != null">
+        isInBook = #{record.isinbook,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        Remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publicationname != null">
+        PublicationName = #{record.publicationname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reelnum != null">
+        ReelNum = #{record.reelnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pagerange != null">
+        PageRange = #{record.pagerange,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null">
+        Date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.issue != null">
+        Issue = #{record.issue,jdbcType=INTEGER},
+      </if>
+      <if test="record.isexpenditure != null">
+        IsExpenditure = #{record.isexpenditure,jdbcType=INTEGER},
+      </if>
+      <if test="record.expenditure != null">
+        Expenditure = #{record.expenditure,jdbcType=INTEGER},
+      </if>
+      <if test="record.retrievalkind != null">
+        RetrievalKind = #{record.retrievalkind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.retrievalid != null">
+        RetrievalID = #{record.retrievalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Thesis
+    set ThesisID = #{record.thesisid,jdbcType=INTEGER},
+      ThesisName = #{record.thesisname,jdbcType=VARCHAR},
+      FirstWriter = #{record.firstwriter,jdbcType=VARCHAR},
+      SecondWriter = #{record.secondwriter,jdbcType=VARCHAR},
+      Position = #{record.position,jdbcType=VARCHAR},
+      isInBook = #{record.isinbook,jdbcType=INTEGER},
+      Remark = #{record.remark,jdbcType=VARCHAR},
+      PublicationName = #{record.publicationname,jdbcType=VARCHAR},
+      ReelNum = #{record.reelnum,jdbcType=INTEGER},
+      PageRange = #{record.pagerange,jdbcType=VARCHAR},
+      Date = #{record.date,jdbcType=TIMESTAMP},
+      Issue = #{record.issue,jdbcType=INTEGER},
+      IsExpenditure = #{record.isexpenditure,jdbcType=INTEGER},
+      Expenditure = #{record.expenditure,jdbcType=INTEGER},
+      RetrievalKind = #{record.retrievalkind,jdbcType=VARCHAR},
+      RetrievalID = #{record.retrievalid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sciencemanager.bean.Thesis">
+    update Thesis
+    <set>
+      <if test="thesisname != null">
+        ThesisName = #{thesisname,jdbcType=VARCHAR},
+      </if>
+      <if test="firstwriter != null">
+        FirstWriter = #{firstwriter,jdbcType=VARCHAR},
+      </if>
+      <if test="secondwriter != null">
+        SecondWriter = #{secondwriter,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        Position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="isinbook != null">
+        isInBook = #{isinbook,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="publicationname != null">
+        PublicationName = #{publicationname,jdbcType=VARCHAR},
+      </if>
+      <if test="reelnum != null">
+        ReelNum = #{reelnum,jdbcType=INTEGER},
+      </if>
+      <if test="pagerange != null">
+        PageRange = #{pagerange,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        Date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="issue != null">
+        Issue = #{issue,jdbcType=INTEGER},
+      </if>
+      <if test="isexpenditure != null">
+        IsExpenditure = #{isexpenditure,jdbcType=INTEGER},
+      </if>
+      <if test="expenditure != null">
+        Expenditure = #{expenditure,jdbcType=INTEGER},
+      </if>
+      <if test="retrievalkind != null">
+        RetrievalKind = #{retrievalkind,jdbcType=VARCHAR},
+      </if>
+      <if test="retrievalid != null">
+        RetrievalID = #{retrievalid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ThesisID = #{thesisid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sciencemanager.bean.Thesis">
+    update Thesis
+    set ThesisName = #{thesisname,jdbcType=VARCHAR},
+      FirstWriter = #{firstwriter,jdbcType=VARCHAR},
+      SecondWriter = #{secondwriter,jdbcType=VARCHAR},
+      Position = #{position,jdbcType=VARCHAR},
+      isInBook = #{isinbook,jdbcType=INTEGER},
+      Remark = #{remark,jdbcType=VARCHAR},
+      PublicationName = #{publicationname,jdbcType=VARCHAR},
+      ReelNum = #{reelnum,jdbcType=INTEGER},
+      PageRange = #{pagerange,jdbcType=VARCHAR},
+      Date = #{date,jdbcType=TIMESTAMP},
+      Issue = #{issue,jdbcType=INTEGER},
+      IsExpenditure = #{isexpenditure,jdbcType=INTEGER},
+      Expenditure = #{expenditure,jdbcType=INTEGER},
+      RetrievalKind = #{retrievalkind,jdbcType=VARCHAR},
+      RetrievalID = #{retrievalid,jdbcType=INTEGER}
+    where ThesisID = #{thesisid,jdbcType=INTEGER}
+  </update>
+</mapper>

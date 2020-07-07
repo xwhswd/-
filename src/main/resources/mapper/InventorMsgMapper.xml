@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sciencemanager.mapper.InventorMsgMapper">
+  <resultMap id="BaseResultMap" type="com.example.sciencemanager.bean.InventorMsg">
+    <id column="InventorName" jdbcType="VARCHAR" property="inventorname" />
+    <result column="Ranking" jdbcType="INTEGER" property="ranking" />
+    <result column="Company" jdbcType="VARCHAR" property="company" />
+    <result column="ApplicationID" jdbcType="INTEGER" property="applicationid" />
+    <result column="ContributeRate" jdbcType="DOUBLE" property="contributerate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    InventorName, Ranking, Company, ApplicationID, ContributeRate
+  </sql>
+  <select id="selectByExample" parameterType="com.example.sciencemanager.bean.InventorMsgExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from InventorMsg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from InventorMsg
+    where InventorName = #{inventorname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from InventorMsg
+    where InventorName = #{inventorname,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.sciencemanager.bean.InventorMsgExample">
+    delete from InventorMsg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.sciencemanager.bean.InventorMsg">
+    insert into InventorMsg (InventorName, Ranking, Company, 
+      ApplicationID, ContributeRate)
+    values (#{inventorname,jdbcType=VARCHAR}, #{ranking,jdbcType=INTEGER}, #{company,jdbcType=VARCHAR}, 
+      #{applicationid,jdbcType=INTEGER}, #{contributerate,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.sciencemanager.bean.InventorMsg">
+    insert into InventorMsg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="inventorname != null">
+        InventorName,
+      </if>
+      <if test="ranking != null">
+        Ranking,
+      </if>
+      <if test="company != null">
+        Company,
+      </if>
+      <if test="applicationid != null">
+        ApplicationID,
+      </if>
+      <if test="contributerate != null">
+        ContributeRate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="inventorname != null">
+        #{inventorname,jdbcType=VARCHAR},
+      </if>
+      <if test="ranking != null">
+        #{ranking,jdbcType=INTEGER},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationid != null">
+        #{applicationid,jdbcType=INTEGER},
+      </if>
+      <if test="contributerate != null">
+        #{contributerate,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.sciencemanager.bean.InventorMsgExample" resultType="java.lang.Long">
+    select count(*) from InventorMsg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update InventorMsg
+    <set>
+      <if test="record.inventorname != null">
+        InventorName = #{record.inventorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ranking != null">
+        Ranking = #{record.ranking,jdbcType=INTEGER},
+      </if>
+      <if test="record.company != null">
+        Company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationid != null">
+        ApplicationID = #{record.applicationid,jdbcType=INTEGER},
+      </if>
+      <if test="record.contributerate != null">
+        ContributeRate = #{record.contributerate,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update InventorMsg
+    set InventorName = #{record.inventorname,jdbcType=VARCHAR},
+      Ranking = #{record.ranking,jdbcType=INTEGER},
+      Company = #{record.company,jdbcType=VARCHAR},
+      ApplicationID = #{record.applicationid,jdbcType=INTEGER},
+      ContributeRate = #{record.contributerate,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sciencemanager.bean.InventorMsg">
+    update InventorMsg
+    <set>
+      <if test="ranking != null">
+        Ranking = #{ranking,jdbcType=INTEGER},
+      </if>
+      <if test="company != null">
+        Company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationid != null">
+        ApplicationID = #{applicationid,jdbcType=INTEGER},
+      </if>
+      <if test="contributerate != null">
+        ContributeRate = #{contributerate,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where InventorName = #{inventorname,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sciencemanager.bean.InventorMsg">
+    update InventorMsg
+    set Ranking = #{ranking,jdbcType=INTEGER},
+      Company = #{company,jdbcType=VARCHAR},
+      ApplicationID = #{applicationid,jdbcType=INTEGER},
+      ContributeRate = #{contributerate,jdbcType=DOUBLE}
+    where InventorName = #{inventorname,jdbcType=VARCHAR}
+  </update>
+</mapper>

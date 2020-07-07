@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sciencemanager.mapper.TrainingProgramMapper">
+  <resultMap id="BaseResultMap" type="com.example.sciencemanager.bean.TrainingProgram">
+    <id column="SerialNum" jdbcType="INTEGER" property="serialnum" />
+    <result column="SubjectKind" jdbcType="VARCHAR" property="subjectkind" />
+    <result column="SubjectID" jdbcType="INTEGER" property="subjectid" />
+    <result column="SubjectName" jdbcType="VARCHAR" property="subjectname" />
+    <result column="Period" jdbcType="INTEGER" property="period" />
+    <result column="Credit" jdbcType="INTEGER" property="credit" />
+    <result column="SubjectTerm" jdbcType="VARCHAR" property="subjectterm" />
+    <result column="MethodOfExamination" jdbcType="VARCHAR" property="methodofexamination" />
+    <result column="College" jdbcType="VARCHAR" property="college" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    SerialNum, SubjectKind, SubjectID, SubjectName, Period, Credit, SubjectTerm, MethodOfExamination, 
+    College
+  </sql>
+  <select id="selectByExample" parameterType="com.example.sciencemanager.bean.TrainingProgramExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TrainingProgram
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TrainingProgram
+    where SerialNum = #{serialnum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from TrainingProgram
+    where SerialNum = #{serialnum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.sciencemanager.bean.TrainingProgramExample">
+    delete from TrainingProgram
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.sciencemanager.bean.TrainingProgram">
+    insert into TrainingProgram (SerialNum, SubjectKind, SubjectID, 
+      SubjectName, Period, Credit, 
+      SubjectTerm, MethodOfExamination, College
+      )
+    values (#{serialnum,jdbcType=INTEGER}, #{subjectkind,jdbcType=VARCHAR}, #{subjectid,jdbcType=INTEGER}, 
+      #{subjectname,jdbcType=VARCHAR}, #{period,jdbcType=INTEGER}, #{credit,jdbcType=INTEGER}, 
+      #{subjectterm,jdbcType=VARCHAR}, #{methodofexamination,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.sciencemanager.bean.TrainingProgram">
+    insert into TrainingProgram
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serialnum != null">
+        SerialNum,
+      </if>
+      <if test="subjectkind != null">
+        SubjectKind,
+      </if>
+      <if test="subjectid != null">
+        SubjectID,
+      </if>
+      <if test="subjectname != null">
+        SubjectName,
+      </if>
+      <if test="period != null">
+        Period,
+      </if>
+      <if test="credit != null">
+        Credit,
+      </if>
+      <if test="subjectterm != null">
+        SubjectTerm,
+      </if>
+      <if test="methodofexamination != null">
+        MethodOfExamination,
+      </if>
+      <if test="college != null">
+        College,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serialnum != null">
+        #{serialnum,jdbcType=INTEGER},
+      </if>
+      <if test="subjectkind != null">
+        #{subjectkind,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectid != null">
+        #{subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="subjectname != null">
+        #{subjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="subjectterm != null">
+        #{subjectterm,jdbcType=VARCHAR},
+      </if>
+      <if test="methodofexamination != null">
+        #{methodofexamination,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        #{college,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.sciencemanager.bean.TrainingProgramExample" resultType="java.lang.Long">
+    select count(*) from TrainingProgram
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update TrainingProgram
+    <set>
+      <if test="record.serialnum != null">
+        SerialNum = #{record.serialnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectkind != null">
+        SubjectKind = #{record.subjectkind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectid != null">
+        SubjectID = #{record.subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectname != null">
+        SubjectName = #{record.subjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.period != null">
+        Period = #{record.period,jdbcType=INTEGER},
+      </if>
+      <if test="record.credit != null">
+        Credit = #{record.credit,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectterm != null">
+        SubjectTerm = #{record.subjectterm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.methodofexamination != null">
+        MethodOfExamination = #{record.methodofexamination,jdbcType=VARCHAR},
+      </if>
+      <if test="record.college != null">
+        College = #{record.college,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update TrainingProgram
+    set SerialNum = #{record.serialnum,jdbcType=INTEGER},
+      SubjectKind = #{record.subjectkind,jdbcType=VARCHAR},
+      SubjectID = #{record.subjectid,jdbcType=INTEGER},
+      SubjectName = #{record.subjectname,jdbcType=VARCHAR},
+      Period = #{record.period,jdbcType=INTEGER},
+      Credit = #{record.credit,jdbcType=INTEGER},
+      SubjectTerm = #{record.subjectterm,jdbcType=VARCHAR},
+      MethodOfExamination = #{record.methodofexamination,jdbcType=VARCHAR},
+      College = #{record.college,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sciencemanager.bean.TrainingProgram">
+    update TrainingProgram
+    <set>
+      <if test="subjectkind != null">
+        SubjectKind = #{subjectkind,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectid != null">
+        SubjectID = #{subjectid,jdbcType=INTEGER},
+      </if>
+      <if test="subjectname != null">
+        SubjectName = #{subjectname,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        Period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        Credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="subjectterm != null">
+        SubjectTerm = #{subjectterm,jdbcType=VARCHAR},
+      </if>
+      <if test="methodofexamination != null">
+        MethodOfExamination = #{methodofexamination,jdbcType=VARCHAR},
+      </if>
+      <if test="college != null">
+        College = #{college,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SerialNum = #{serialnum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sciencemanager.bean.TrainingProgram">
+    update TrainingProgram
+    set SubjectKind = #{subjectkind,jdbcType=VARCHAR},
+      SubjectID = #{subjectid,jdbcType=INTEGER},
+      SubjectName = #{subjectname,jdbcType=VARCHAR},
+      Period = #{period,jdbcType=INTEGER},
+      Credit = #{credit,jdbcType=INTEGER},
+      SubjectTerm = #{subjectterm,jdbcType=VARCHAR},
+      MethodOfExamination = #{methodofexamination,jdbcType=VARCHAR},
+      College = #{college,jdbcType=VARCHAR}
+    where SerialNum = #{serialnum,jdbcType=INTEGER}
+  </update>
+</mapper>

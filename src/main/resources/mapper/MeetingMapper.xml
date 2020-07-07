@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sciencemanager.mapper.MeetingMapper">
+  <resultMap id="BaseResultMap" type="com.example.sciencemanager.bean.Meeting">
+    <id column="ParticipantName" jdbcType="VARCHAR" property="participantname" />
+    <result column="MeetingName" jdbcType="VARCHAR" property="meetingname" />
+    <result column="Sponsor" jdbcType="VARCHAR" property="sponsor" />
+    <result column="MeetingKind" jdbcType="INTEGER" property="meetingkind" />
+    <result column="SubjectKind" jdbcType="INTEGER" property="subjectkind" />
+    <result column="Address" jdbcType="VARCHAR" property="address" />
+    <result column="Date" jdbcType="TIMESTAMP" property="date" />
+    <result column="IsThesis" jdbcType="INTEGER" property="isthesis" />
+    <result column="IsReport" jdbcType="INTEGER" property="isreport" />
+    <result column="ThesisName" jdbcType="VARCHAR" property="thesisname" />
+    <result column="MeetingIntroduction" jdbcType="VARCHAR" property="meetingintroduction" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ParticipantName, MeetingName, Sponsor, MeetingKind, SubjectKind, Address, Date, IsThesis, 
+    IsReport, ThesisName, MeetingIntroduction
+  </sql>
+  <select id="selectByExample" parameterType="com.example.sciencemanager.bean.MeetingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Meeting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Meeting
+    where ParticipantName = #{participantname,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from Meeting
+    where ParticipantName = #{participantname,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.sciencemanager.bean.MeetingExample">
+    delete from Meeting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.sciencemanager.bean.Meeting">
+    insert into Meeting (ParticipantName, MeetingName, Sponsor, 
+      MeetingKind, SubjectKind, Address, 
+      Date, IsThesis, IsReport, 
+      ThesisName, MeetingIntroduction)
+    values (#{participantname,jdbcType=VARCHAR}, #{meetingname,jdbcType=VARCHAR}, #{sponsor,jdbcType=VARCHAR}, 
+      #{meetingkind,jdbcType=INTEGER}, #{subjectkind,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{date,jdbcType=TIMESTAMP}, #{isthesis,jdbcType=INTEGER}, #{isreport,jdbcType=INTEGER}, 
+      #{thesisname,jdbcType=VARCHAR}, #{meetingintroduction,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.sciencemanager.bean.Meeting">
+    insert into Meeting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="participantname != null">
+        ParticipantName,
+      </if>
+      <if test="meetingname != null">
+        MeetingName,
+      </if>
+      <if test="sponsor != null">
+        Sponsor,
+      </if>
+      <if test="meetingkind != null">
+        MeetingKind,
+      </if>
+      <if test="subjectkind != null">
+        SubjectKind,
+      </if>
+      <if test="address != null">
+        Address,
+      </if>
+      <if test="date != null">
+        Date,
+      </if>
+      <if test="isthesis != null">
+        IsThesis,
+      </if>
+      <if test="isreport != null">
+        IsReport,
+      </if>
+      <if test="thesisname != null">
+        ThesisName,
+      </if>
+      <if test="meetingintroduction != null">
+        MeetingIntroduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="participantname != null">
+        #{participantname,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingname != null">
+        #{meetingname,jdbcType=VARCHAR},
+      </if>
+      <if test="sponsor != null">
+        #{sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingkind != null">
+        #{meetingkind,jdbcType=INTEGER},
+      </if>
+      <if test="subjectkind != null">
+        #{subjectkind,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isthesis != null">
+        #{isthesis,jdbcType=INTEGER},
+      </if>
+      <if test="isreport != null">
+        #{isreport,jdbcType=INTEGER},
+      </if>
+      <if test="thesisname != null">
+        #{thesisname,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingintroduction != null">
+        #{meetingintroduction,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.sciencemanager.bean.MeetingExample" resultType="java.lang.Long">
+    select count(*) from Meeting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Meeting
+    <set>
+      <if test="record.participantname != null">
+        ParticipantName = #{record.participantname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingname != null">
+        MeetingName = #{record.meetingname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sponsor != null">
+        Sponsor = #{record.sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingkind != null">
+        MeetingKind = #{record.meetingkind,jdbcType=INTEGER},
+      </if>
+      <if test="record.subjectkind != null">
+        SubjectKind = #{record.subjectkind,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        Address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.date != null">
+        Date = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isthesis != null">
+        IsThesis = #{record.isthesis,jdbcType=INTEGER},
+      </if>
+      <if test="record.isreport != null">
+        IsReport = #{record.isreport,jdbcType=INTEGER},
+      </if>
+      <if test="record.thesisname != null">
+        ThesisName = #{record.thesisname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingintroduction != null">
+        MeetingIntroduction = #{record.meetingintroduction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Meeting
+    set ParticipantName = #{record.participantname,jdbcType=VARCHAR},
+      MeetingName = #{record.meetingname,jdbcType=VARCHAR},
+      Sponsor = #{record.sponsor,jdbcType=VARCHAR},
+      MeetingKind = #{record.meetingkind,jdbcType=INTEGER},
+      SubjectKind = #{record.subjectkind,jdbcType=INTEGER},
+      Address = #{record.address,jdbcType=VARCHAR},
+      Date = #{record.date,jdbcType=TIMESTAMP},
+      IsThesis = #{record.isthesis,jdbcType=INTEGER},
+      IsReport = #{record.isreport,jdbcType=INTEGER},
+      ThesisName = #{record.thesisname,jdbcType=VARCHAR},
+      MeetingIntroduction = #{record.meetingintroduction,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sciencemanager.bean.Meeting">
+    update Meeting
+    <set>
+      <if test="meetingname != null">
+        MeetingName = #{meetingname,jdbcType=VARCHAR},
+      </if>
+      <if test="sponsor != null">
+        Sponsor = #{sponsor,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingkind != null">
+        MeetingKind = #{meetingkind,jdbcType=INTEGER},
+      </if>
+      <if test="subjectkind != null">
+        SubjectKind = #{subjectkind,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        Address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null">
+        Date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isthesis != null">
+        IsThesis = #{isthesis,jdbcType=INTEGER},
+      </if>
+      <if test="isreport != null">
+        IsReport = #{isreport,jdbcType=INTEGER},
+      </if>
+      <if test="thesisname != null">
+        ThesisName = #{thesisname,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingintroduction != null">
+        MeetingIntroduction = #{meetingintroduction,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ParticipantName = #{participantname,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sciencemanager.bean.Meeting">
+    update Meeting
+    set MeetingName = #{meetingname,jdbcType=VARCHAR},
+      Sponsor = #{sponsor,jdbcType=VARCHAR},
+      MeetingKind = #{meetingkind,jdbcType=INTEGER},
+      SubjectKind = #{subjectkind,jdbcType=INTEGER},
+      Address = #{address,jdbcType=VARCHAR},
+      Date = #{date,jdbcType=TIMESTAMP},
+      IsThesis = #{isthesis,jdbcType=INTEGER},
+      IsReport = #{isreport,jdbcType=INTEGER},
+      ThesisName = #{thesisname,jdbcType=VARCHAR},
+      MeetingIntroduction = #{meetingintroduction,jdbcType=VARCHAR}
+    where ParticipantName = #{participantname,jdbcType=VARCHAR}
+  </update>
+</mapper>

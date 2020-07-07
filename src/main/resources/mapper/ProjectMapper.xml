@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.sciencemanager.mapper.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.example.sciencemanager.bean.Project">
+    <id column="ProjectID" jdbcType="INTEGER" property="projectid" />
+    <result column="ProjectName" jdbcType="VARCHAR" property="projectname" />
+    <result column="ProjectMaster" jdbcType="VARCHAR" property="projectmaster" />
+    <result column="Source" jdbcType="VARCHAR" property="source" />
+    <result column="Ranking" jdbcType="INTEGER" property="ranking" />
+    <result column="Kind" jdbcType="VARCHAR" property="kind" />
+    <result column="Level" jdbcType="INTEGER" property="level" />
+    <result column="Position" jdbcType="VARCHAR" property="position" />
+    <result column="expenditure" jdbcType="INTEGER" property="expenditure" />
+    <result column="Mission" jdbcType="VARCHAR" property="mission" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ProjectID, ProjectName, ProjectMaster, Source, Ranking, Kind, Level, Position, expenditure, 
+    Mission
+  </sql>
+  <select id="selectByExample" parameterType="com.example.sciencemanager.bean.ProjectExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from Project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from Project
+    where ProjectID = #{projectid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from Project
+    where ProjectID = #{projectid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.sciencemanager.bean.ProjectExample">
+    delete from Project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.sciencemanager.bean.Project">
+    insert into Project (ProjectID, ProjectName, ProjectMaster, 
+      Source, Ranking, Kind, 
+      Level, Position, expenditure, 
+      Mission)
+    values (#{projectid,jdbcType=INTEGER}, #{projectname,jdbcType=VARCHAR}, #{projectmaster,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{ranking,jdbcType=INTEGER}, #{kind,jdbcType=VARCHAR}, 
+      #{level,jdbcType=INTEGER}, #{position,jdbcType=VARCHAR}, #{expenditure,jdbcType=INTEGER}, 
+      #{mission,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.sciencemanager.bean.Project">
+    insert into Project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectid != null">
+        ProjectID,
+      </if>
+      <if test="projectname != null">
+        ProjectName,
+      </if>
+      <if test="projectmaster != null">
+        ProjectMaster,
+      </if>
+      <if test="source != null">
+        Source,
+      </if>
+      <if test="ranking != null">
+        Ranking,
+      </if>
+      <if test="kind != null">
+        Kind,
+      </if>
+      <if test="level != null">
+        Level,
+      </if>
+      <if test="position != null">
+        Position,
+      </if>
+      <if test="expenditure != null">
+        expenditure,
+      </if>
+      <if test="mission != null">
+        Mission,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectid != null">
+        #{projectid,jdbcType=INTEGER},
+      </if>
+      <if test="projectname != null">
+        #{projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="projectmaster != null">
+        #{projectmaster,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="ranking != null">
+        #{ranking,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="expenditure != null">
+        #{expenditure,jdbcType=INTEGER},
+      </if>
+      <if test="mission != null">
+        #{mission,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.sciencemanager.bean.ProjectExample" resultType="java.lang.Long">
+    select count(*) from Project
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update Project
+    <set>
+      <if test="record.projectid != null">
+        ProjectID = #{record.projectid,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectname != null">
+        ProjectName = #{record.projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectmaster != null">
+        ProjectMaster = #{record.projectmaster,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null">
+        Source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ranking != null">
+        Ranking = #{record.ranking,jdbcType=INTEGER},
+      </if>
+      <if test="record.kind != null">
+        Kind = #{record.kind,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null">
+        Level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.position != null">
+        Position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expenditure != null">
+        expenditure = #{record.expenditure,jdbcType=INTEGER},
+      </if>
+      <if test="record.mission != null">
+        Mission = #{record.mission,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update Project
+    set ProjectID = #{record.projectid,jdbcType=INTEGER},
+      ProjectName = #{record.projectname,jdbcType=VARCHAR},
+      ProjectMaster = #{record.projectmaster,jdbcType=VARCHAR},
+      Source = #{record.source,jdbcType=VARCHAR},
+      Ranking = #{record.ranking,jdbcType=INTEGER},
+      Kind = #{record.kind,jdbcType=VARCHAR},
+      Level = #{record.level,jdbcType=INTEGER},
+      Position = #{record.position,jdbcType=VARCHAR},
+      expenditure = #{record.expenditure,jdbcType=INTEGER},
+      Mission = #{record.mission,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.sciencemanager.bean.Project">
+    update Project
+    <set>
+      <if test="projectname != null">
+        ProjectName = #{projectname,jdbcType=VARCHAR},
+      </if>
+      <if test="projectmaster != null">
+        ProjectMaster = #{projectmaster,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        Source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="ranking != null">
+        Ranking = #{ranking,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null">
+        Kind = #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        Level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="position != null">
+        Position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="expenditure != null">
+        expenditure = #{expenditure,jdbcType=INTEGER},
+      </if>
+      <if test="mission != null">
+        Mission = #{mission,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ProjectID = #{projectid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.sciencemanager.bean.Project">
+    update Project
+    set ProjectName = #{projectname,jdbcType=VARCHAR},
+      ProjectMaster = #{projectmaster,jdbcType=VARCHAR},
+      Source = #{source,jdbcType=VARCHAR},
+      Ranking = #{ranking,jdbcType=INTEGER},
+      Kind = #{kind,jdbcType=VARCHAR},
+      Level = #{level,jdbcType=INTEGER},
+      Position = #{position,jdbcType=VARCHAR},
+      expenditure = #{expenditure,jdbcType=INTEGER},
+      Mission = #{mission,jdbcType=VARCHAR}
+    where ProjectID = #{projectid,jdbcType=INTEGER}
+  </update>
+</mapper>
